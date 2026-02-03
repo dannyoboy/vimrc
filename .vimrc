@@ -1,57 +1,47 @@
-"  ----------------------------------------------------------------------
-"  Plugins
-"  ----------------------------------------------------------------------
-call plug#begin()
-Plug 'altercation/vim-colors-solarized'
-Plug 'scrooloose/nerdtree'
-Plug 'bling/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-call plug#end()
-let NERDTreeIgnore = ['\c^ntuser\..*']
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_solarized_bg='dark'
+syntax enable
 
-"  ----------------------------------------------------------------------
-"  General Settings
-"  ----------------------------------------------------------------------
 set number relativenumber
-set expandtab
-set tabstop=3
-set softtabstop=3
-set shiftwidth=3
 set autoindent
 set ruler
-set cursorline
-syntax on
-syntax enable
-set t_Co=256
-set background=dark
-colorscheme solarized
 set guifont=Consolas:h12
-set backspace=2
-set guioptions -=T
+set scrolloff=0
 
-"  ----------------------------------------------------------------------
-"  Autocommands
-"  ----------------------------------------------------------------------
-autocmd vimenter * NERDTree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-autocmd VimEnter * silent NERDTree
-autocmd VimEnter * if argc() == 1 | NERDTree | wincmd p | endif
-au GUIEnter * simalt ~x
+"make tabs into spaces
+set expandtab
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set autoindent
 
-"  ----------------------------------------------------------------------
-"  Mappings
-"  ----------------------------------------------------------------------
+".ts indents are 2 spaces
+autocmd Filetype typescript setlocal ts=2 sts=2 sw=2 expandtab
+
+".tsx indents are 2 spaces
+autocmd Filetype typescriptreact setlocal ts=2 sts=2 sw=2 expandtab
+
+"leader mapping
+nnoremap <SPACE> <Nop>
+let mapleader=" "
 nnoremap ; :
 inoremap jk <Esc>
 inoremap kj <Esc>
-nnoremap <C-S-tab> :bprevious<CR>
-nnoremap <C-tab> :bnext<CR>
-inoremap {<cr> {<cr>}<Esc>O
+
+"moving between windows
+nmap <C-h> <C-w>h
+nmap <C-j> <C-w>j
+nmap <C-k> <C-w>k
+nmap <C-l> <C-w>l
 
 "  ----------------------------------------------------------------------
-"  Leader Mappings
+"  ctrlp Plugin
 "  ----------------------------------------------------------------------
-let mapleader=" "
-map <leader>q :bp<bar>sp<bar>bn<bar>bd<CR>
+nnoremap <Leader>p :CtrlP<CR>
+nnoremap <Leader>bb :CtrlPBuffer<CR>
+nnoremap <Leader>bm :CtrlPMixed<CR>
+nnoremap <Leader>bs :CtrlPMRU<CR>
+
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'file': '\v\.(exe|so|dll)$',
+  \ }
